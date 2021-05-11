@@ -40,7 +40,6 @@ async function handlePlaceSelect(updateQuery, updateGeometry) {
   const geometry = addressObject.geometry.location;
   updateQuery(query);
   updateGeometry(geometry);
-  console.log(addressObject)
 }
 
 function App() {
@@ -50,7 +49,7 @@ function App() {
 
   useEffect(() => {
     loadScript(
-      `https://maps.googleapis.com/maps/api/js?key=AIzaSyBs7I26Y6yTv8p602DeTFBXlhs_ClmKv2k&libraries=places`,
+      `https://maps.googleapis.com/maps/api/js?key=${process.env.REACT_APP_GOOGLE_API_KEY}&libraries=places`,
       () => handleScriptLoad(updateAddress, updateGeometry, autoCompleteRef)
     );
   }, []);
