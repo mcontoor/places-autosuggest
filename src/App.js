@@ -48,11 +48,11 @@ const containerStyle = {
 };
 
 
-var options = {
-  enableHighAccuracy: true,
-  timeout: 5000,
-  maximumAge: 0
-};
+// var options = {
+//   enableHighAccuracy: true,
+//   timeout: 5000,
+//   maximumAge: 0
+// };
 
 function App() {
   const [address, updateAddress] = useState('');
