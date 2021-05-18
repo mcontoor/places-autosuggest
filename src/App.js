@@ -31,7 +31,8 @@ async function handlePlaceSelect(updateQuery, updateGeometry) {
 }
 
 const containerStyle = {
-  width: '400px',
+  maxWidth: '400px',
+  width: '100%',
   height: '300px'
 };
 
@@ -105,7 +106,9 @@ function App() {
           <p>Longitude: {lng}</p>
         </div>
             <GoogleMap
+              id="map"
               mapContainerStyle={containerStyle}
+              clickableIcons={false}
               center={{
                 lat: lat || 0,
                 lng: lng || 180,
@@ -121,8 +124,19 @@ function App() {
                   updateLng(map.center.lng());
                 }
               }}
+              options={{
+                mapTypeControlOptions: {
+                  mapTypeIds: ["ROADMAP"]
+                },
+                mapTypeControl: false,
+                zoom: 18,
+                fullScreenControl: false,
+                gestureHandling: 'greedy',
+              }}
             >
-              <Marker position={{ lat, lng }} draggable onDragEnd={(e) => {
+              <Marker 
+                position={{ lat, lng }} 
+                draggable onDragEnd={(e) => {
                   const lat = e.latLng.lat();
                   const lng = e.latLng.lng();
                   updateLat(lat);
