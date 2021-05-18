@@ -122,7 +122,13 @@ function App() {
                 }
               }}
             >
-              <Marker position={{ lat, lng }} />
+              <Marker position={{ lat, lng }} draggable onDragEnd={(e) => {
+                  const lat = e.latLng.lat();
+                  const lng = e.latLng.lng();
+                  updateLat(lat);
+                  updateLng(lng);
+                }
+              }/>
             </GoogleMap>
         </LoadScript>
       </header>
