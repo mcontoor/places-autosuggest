@@ -132,6 +132,8 @@ function App() {
                 zoom: 18,
                 fullScreenControl: false,
                 gestureHandling: 'greedy',
+                disableDefaultUI: true,
+                zoomControl: true,
               }}
             >
               <Marker 
