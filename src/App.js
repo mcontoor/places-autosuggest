@@ -36,10 +36,32 @@ const containerStyle = {
   height: '300px'
 };
 
+function geocodeLatLng(geocoder, markerRef, updateAddress) {
+  console.log(markerRef.current.props.position)
+  // const input = document.getElementById("latlng").value;
+  // const latlngStr = input.split(",", 2);
+  // const latlng = {
+  //   lat: parseFloat(latlngStr[0]),
+  //   lng: parseFloat(latlngStr[1]),
+  // };
+  geocoder.geocode({ location: markerRef.current.props.position }, (results, status) => {
+    if (status === "OK") {
+      if (results[0]) {
+
+        updateAddress(results[0].formatted_address)
+      } else {
+        window.alert("No results found");
+      }
+    } else {
+      window.alert("Geocoder failed due to: " + status);
+    }
+  });
+}
 function App() {
   const [address, updateAddress] = useState('');
   const [geometry, updateGeometry] = useState({});
   const autoCompleteRef = useRef(null);
+  const mapRef = useRef(null);
   const [map, setMap] = useState(null)
   const [lat, updateLat] = useState(0);
   const [lng, updateLng] = useState(180);
@@ -137,12 +159,16 @@ function App() {
               }}
             >
               <Marker 
+                ref={mapRef}
                 position={{ lat, lng }} 
-                draggable onDragEnd={(e) => {
+                draggable 
+                onDragEnd={(e) => {
                   const lat = e.latLng.lat();
                   const lng = e.latLng.lng();
                   updateLat(lat);
                   updateLng(lng);
+                  const geocoder = new window.google.maps.Geocoder();
+                  geocodeLatLng(geocoder, mapRef, updateAddress);
                 }
               }/>
             </GoogleMap>
